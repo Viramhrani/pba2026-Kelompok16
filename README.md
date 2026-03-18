@@ -5,7 +5,7 @@ Proyek ini bertujuan untuk membandingkan performa pendekatan Machine Learning (M
 # Team Members: Kelompok 16 
 | Name | NIM | GitHub Username |
 |------|-----|----------------|
-| Daris Samudra | 122450 | @username |
+| Daris Samudra | 122450102 | @darissamudra2924 |
 | Kharisa Harvany | 122450 | @username |
 | Vira Putri Maharani | 122450129 | @Viramhrani |
 # Dataset
