@@ -23,6 +23,7 @@ Tujuan utama dari proyek ini meliputi:
 6.  Mempublikasikan laporan ilmiah dalam format *ArXiv*.
 ## Repository Structure
 Format struktur repositori disesuaikan dengan standar pengerjaan tugas:
+```
 text
 pba2026-kelompok16
 │
@@ -51,6 +52,7 @@ pba2026-kelompok16
 ├── paper/                      # Source code LaTeX (main.tex & .bib)
 │
 └── README.md                   # Dokumentasi utama proyek
+```
 ## Machine Learning Approach
 Model Machine Learning dikembangkan menggunakan modul pycaret.classification. Kami akan melakukan benchmark otomatis pada beberapa algoritma, seperti:
 *   Logistic Regression
