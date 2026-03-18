@@ -61,3 +61,24 @@ Model Machine Learning dikembangkan menggunakan modul pycaret.classification. Ka
 *   Gradient Boosting Machines (GBM)
 
 Model terbaik akan dipilih berdasarkan hasil evaluasi terbaik pada fase benchmarking.
+
+## Deep Learning Approach
+Model Deep Learning diimplementasikan secara manual menggunakan *PyTorch*. Arsitektur yang mungkin digunakan meliputi:
+*   LSTM (Long Short-Term Memory) atau GRU.
+*   CNN untuk klasifikasi teks.
+*   Model Transformer ringan (seperti DistilBERT atau arsitektur kustom) dengan total parameter *di bawah 10 juta (10M)*.
+
+## Deployment
+Dua demo interaktif akan dideploy ke Hugging Face Spaces menggunakan Gradio atau Streamlit:
+*   *ML Model Model (PyCaret):* [Link akan ditambahkan di Checkpoint 2]
+*   *DL Model Model (PyTorch):* [Link akan ditambahkan di Checkpoint 3]
+
+## Scientific Paper
+Laporan akhir proyek disusun menggunakan template LaTeX berformat ArXiv. Paper ini akan mencakup deskripsi dataset, metodologi, setup eksperimen, dan analisis komparatif antara ML dan DL.
+*   *ArXiv Link:* [Link akan ditambahkan di Checkpoint 4]
+
+## Course Information
+*   *Course:* Pemrosesan Bahasa Alami (SD25-32202)
+*   *Program:* Sains Data — Institut Teknologi Sumatera
+*   *Semester:* Genap 2025/2026
+*   *Instructor:* Martin C.T. Manullang
