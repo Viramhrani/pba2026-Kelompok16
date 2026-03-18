@@ -5,8 +5,8 @@ Proyek ini bertujuan untuk membandingkan performa pendekatan Machine Learning (M
 # Team Members: Kelompok 16 
 | Name | NIM | GitHub Username |
 |------|-----|----------------|
-| Daris Samudra | 122450 | @username |
-| Kharisa Harvany | 122450 | @username |
+| Daris Samudra | 122450102 | @darissamudra2924 |
+| Kharisa Harvany | 122450061 | @username |
 | Vira Putri Maharani | 122450129 | @Viramhrani |
 # Dataset
 Dataset yang digunakan dalam proyek ini bersumber dari ulasan publik aplikasi Mobile Legends di platform Kaggle.
