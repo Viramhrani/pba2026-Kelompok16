@@ -43,8 +43,6 @@ pba2026-kelompok16
 │   ├── train_dl.py             # Skrip pelatihan DL
 │   └── utils.py                # Fungsi pembantu lainnya
 │
-├── models/                     # Penyimpanan model yang telah dilatih
-│
 ├── app/                        # Kode sumber untuk demo interaktif
 │   ├── ml_demo/                # Gradio/Streamlit untuk model ML
 │   └── dl_demo/                # Gradio/Streamlit untuk model DL
@@ -70,7 +68,7 @@ Model Deep Learning diimplementasikan secara manual menggunakan *PyTorch*. Arsit
 
 ## Deployment
 Dua demo interaktif akan dideploy ke Hugging Face Spaces menggunakan Gradio atau Streamlit:
-*   *ML Model Model (PyCaret):* [Link akan ditambahkan di Checkpoint 2]
+*   *ML Model Model (PyCaret):* [https://huggingface.co/spaces/Viramaharani/mobile-legends-sentiment-analysis]
 *   *DL Model Model (PyTorch):* [Link akan ditambahkan di Checkpoint 3]
 
 ## Scientific Paper
