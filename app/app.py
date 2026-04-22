@@ -1,25 +1,24 @@
-<<<<<<< Updated upstream
 """
 app.py — Gradio App untuk Sentiment Analysis Review Mobile Legends
-Deploy di Hugging Face Spaces
-Model: PyCaret Classification Pipeline (.pkl)
+Cocok untuk Hugging Face Spaces
 """
 
 import re
-import gradio as gr
 import pandas as pd
+import gradio as gr
 from pycaret.classification import load_model, predict_model
 
 # =========================================================
 # LOAD MODEL
-# File hasil save_model(best_model, '../app/best_model')
+# Jika file di folder bernama best_model.pkl,
+# maka cukup tulis load_model("best_model")
 # =========================================================
 
 model = load_model("best_model")
 
 # =========================================================
 # PREPROCESSING
-# Samakan dengan preprocessing di notebook training
+# Disamakan dengan preprocessing training sederhana
 # =========================================================
 
 def clean_text(text):
@@ -28,10 +27,16 @@ def clean_text(text):
 
     text = text.lower()
 
-    # hapus url
+    # hapus URL
     text = re.sub(r"https?://\S+|www\.\S+", "", text)
 
-    # hapus karakter selain huruf dan spasi
+    # hapus mention, hashtag
+    text = re.sub(r"@\w+|#\w+", "", text)
+
+    # hapus angka
+    text = re.sub(r"\d+", "", text)
+
+    # sisakan huruf dan spasi
     text = re.sub(r"[^a-zA-Z\s]", " ", text)
 
     # hapus spasi berlebih
@@ -40,177 +45,64 @@ def clean_text(text):
     return text
 
 # =========================================================
-# FUNGSI PREDIKSI
+# PREDIKSI
 # =========================================================
 
 def predict_sentiment(text):
     if not text or not text.strip():
-        return {"Teks kosong": 1.0}
+        return "Silakan masukkan review terlebih dahulu."
 
-    cleaned = clean_text(text)
+    cleaned_text = clean_text(text)
 
-    df_input = pd.DataFrame({
-        "clean_text": [cleaned]
+    input_df = pd.DataFrame({
+        "clean_text": [cleaned_text]
     })
 
-    result = predict_model(model, data=df_input)
+    result = predict_model(model, data=input_df)
 
-    # PyCaret biasanya menghasilkan prediction_label dan prediction_score
-    label = result["prediction_label"].iloc[0]
+    # Ambil label prediksi
+    label = str(result.loc[0, "prediction_label"])
 
+    # Ambil confidence score jika tersedia
     if "prediction_score" in result.columns:
-        score = float(result["prediction_score"].iloc[0])
-    else:
-        score = 1.0
+        confidence = float(result.loc[0, "prediction_score"]) * 100
+        return f"Sentimen: {label}\nConfidence: {confidence:.2f}%"
 
-    return {str(label): score}
+    return f"Sentimen: {label}"
 
 # =========================================================
-# CONTOH REVIEW
+# CONTOH INPUT
 # =========================================================
 
 examples = [
+    ["produk ini sangat bagus dan pengirimannya cepat"],
+    ["saya kecewa karena barang rusak"],
     ["game nya seru banget dan skin nya keren"],
     ["server sering lag dan banyak bug setelah update"],
     ["bagus sih tapi kadang matchmaking nya aneh"],
-    ["saya suka event terbaru dan hadiahnya menarik"],
-    ["aplikasi sering keluar sendiri, sangat mengecewakan"],
-    ["lumayan, tapi masih perlu perbaikan"],
 ]
 
 # =========================================================
-# GRADIO INTERFACE
+# TAMPILAN GRADIO
 # =========================================================
 
 demo = gr.Interface(
     fn=predict_sentiment,
     inputs=gr.Textbox(
-        label="Tulis Review Mobile Legends",
-        placeholder="Contoh: game nya seru banget dan skin nya keren",
         lines=4,
+        label="Masukkan Review",
+        placeholder="Contoh: game ini seru banget dan tidak lag"
     ),
-    outputs=gr.Label(
-        label="Hasil Sentimen",
-        num_top_classes=3,
-    ),
-    title="🎮 Sentiment Analysis Review Mobile Legends",
-    description=(
-        "Model machine learning untuk mengklasifikasikan ulasan Mobile Legends "
-        "menjadi sentimen Positif, Negatif, atau Netral. "
-        "Dataset berasal dari Kaggle: Mobile Legends App Reviews."
-    ),
+    outputs=gr.Textbox(label="Hasil Prediksi"),
     examples=examples,
-    theme=gr.themes.Soft(),
-    flagging_mode="never",
+    title="🎮 Analisis Sentimen Review Mobile Legends",
+    description="Masukkan review Mobile Legends, lalu model akan memprediksi apakah review tersebut positif, netral, atau negatif.",
+    theme=gr.themes.Soft()
 )
 
-if __name__ == "__main__":
-=======
-"""
-app.py — Gradio App untuk Sentiment Analysis Review Mobile Legends
-Deploy di Hugging Face Spaces
-Model: PyCaret Classification Pipeline (.pkl)
-"""
-
-import re
-import gradio as gr
-import pandas as pd
-from pycaret.classification import load_model, predict_model
-
 # =========================================================
-# LOAD MODEL
-# File hasil save_model(best_model, '../app/best_model')
+# JALANKAN APP
 # =========================================================
-
-model = load_model("best_model")
-
-# =========================================================
-# PREPROCESSING
-# Samakan dengan preprocessing di notebook training
-# =========================================================
-
-def clean_text(text):
-    if not isinstance(text, str):
-        return ""
-
-    text = text.lower()
-
-    # hapus url
-    text = re.sub(r"https?://\S+|www\.\S+", "", text)
-
-    # hapus karakter selain huruf dan spasi
-    text = re.sub(r"[^a-zA-Z\s]", " ", text)
-
-    # hapus spasi berlebih
-    text = re.sub(r"\s+", " ", text).strip()
-
-    return text
-
-# =========================================================
-# FUNGSI PREDIKSI
-# =========================================================
-
-def predict_sentiment(text):
-    if not text or not text.strip():
-        return {"Teks kosong": 1.0}
-
-    cleaned = clean_text(text)
-
-    df_input = pd.DataFrame({
-        "clean_text": [cleaned]
-    })
-
-    result = predict_model(model, data=df_input)
-
-    # PyCaret biasanya menghasilkan prediction_label dan prediction_score
-    label = result["prediction_label"].iloc[0]
-
-    if "prediction_score" in result.columns:
-        score = float(result["prediction_score"].iloc[0])
-    else:
-        score = 1.0
-
-    return {str(label): score}
-
-# =========================================================
-# CONTOH REVIEW
-# =========================================================
-
-examples = [
-    ["game nya seru banget dan skin nya keren"],
-    ["server sering lag dan banyak bug setelah update"],
-    ["bagus sih tapi kadang matchmaking nya aneh"],
-    ["saya suka event terbaru dan hadiahnya menarik"],
-    ["aplikasi sering keluar sendiri, sangat mengecewakan"],
-    ["lumayan, tapi masih perlu perbaikan"],
-]
-
-# =========================================================
-# GRADIO INTERFACE
-# =========================================================
-
-demo = gr.Interface(
-    fn=predict_sentiment,
-    inputs=gr.Textbox(
-        label="Tulis Review Mobile Legends",
-        placeholder="Contoh: game nya seru banget dan skin nya keren",
-        lines=4,
-    ),
-    outputs=gr.Label(
-        label="Hasil Sentimen",
-        num_top_classes=3,
-    ),
-    title="🎮 Sentiment Analysis Review Mobile Legends",
-    description=(
-        "Model machine learning untuk mengklasifikasikan ulasan Mobile Legends "
-        "menjadi sentimen Positif, Negatif, atau Netral. "
-        "Dataset berasal dari Kaggle: Mobile Legends App Reviews."
-    ),
-    examples=examples,
-    theme=gr.themes.Soft(),
-    flagging_mode="never",
-)
 
 if __name__ == "__main__":
->>>>>>> Stashed changes
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
