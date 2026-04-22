@@ -1,12 +1,4 @@
-<<<<<<< Updated upstream
 gradio
 pandas
 joblib
 scikit-learn
-=======
-gradio
-pandas
-joblib
-scikit-learn
->>>>>>> Stashed changes
-pycaret
