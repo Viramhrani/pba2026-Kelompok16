@@ -69,7 +69,7 @@ Model Deep Learning diimplementasikan secara manual menggunakan *PyTorch*. Arsit
 ## Deployment
 Dua demo interaktif akan dideploy ke Hugging Face Spaces menggunakan Gradio atau Streamlit:
 *   *ML Model Model (PyCaret):* [https://huggingface.co/spaces/Viramaharani/mobile-legends-sentiment-analysis]
-*   *DL Model Model (PyTorch):* [https://huggingface.co/spaces/Viramaharani/mobile-legends-sentiment-analysis]
+*   *DL Model Model (PyTorch):* [ https://huggingface.co/spaces/Viramaharani/mobile-legends-sentiment-dl ]
 
 ## Scientific Paper
 Laporan akhir proyek disusun menggunakan template LaTeX berformat ArXiv. Paper ini akan mencakup deskripsi dataset, metodologi, setup eksperimen, dan analisis komparatif antara ML dan DL.
