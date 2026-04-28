@@ -76,12 +76,12 @@ def clean_text(text):
     return text
 
 # =========================================================
-# PREDIKSI (UBAH RETURN JADI DICT BIAR BISA LABEL VISUAL)
+# PREDIKSI
 # =========================================================
 
 def predict_sentiment(text):
     if not text or not text.strip():
-        return {"Silakan masukkan teks": 1.0}
+        return {}, "⚠️ Masukkan teks terlebih dahulu", ""
 
     cleaned = clean_text(text)
 
@@ -96,72 +96,91 @@ def predict_sentiment(text):
 
     labels = le.classes_
 
-    # return dictionary untuk gr.Label
-    return {labels[i]: float(probs[i]) for i in range(len(labels))}
+    result_dict = {labels[i]: float(probs[i]) for i in range(len(labels))}
+
+    pred_index = int(np.argmax(probs))
+    pred_label = labels[pred_index]
+    confidence = probs[pred_index] * 100
+
+    # Insight
+    insight = f"""
+    ### 🤖 Analisis Model
+    - Prediksi: **{pred_label}**
+    - Confidence: **{confidence:.2f}%**
+    """
+
+    # Tampilkan teks setelah preprocessing
+    cleaned_view = f"🔎 Cleaned Text:\n{cleaned}"
+
+    return result_dict, insight, cleaned_view
+
 
 # =========================================================
-# CONTOH INPUT
+# UI MODERN
 # =========================================================
 
-examples = [
-    ["game ini seru banget dan tidak lag"],
-    ["saya kecewa karena banyak bug"],
-    ["skin nya keren dan gameplay nya enak"],
-    ["server sering lag dan tidak stabil"],
-    ["lumayan bagus tapi matchmaking aneh"],
-]
+with gr.Blocks(theme=gr.themes.Monochrome()) as demo:
 
-
-# =========================================================
-# UI MODERN (BLOCKS)
-# =========================================================
-
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
-
-    # HEADER
+    # HEADER (ringkas biar tidak makan tempat)
     gr.Markdown("""
-    # 🎮 Mobile Legends Sentiment Analyzer  
+      # 🎮 Mobile Legends Sentiment Analyzer  
     ### 🤖 Deep Learning (LSTM)
-
-    💡 Masukkan review game, dan model akan menganalisis sentimen secara otomatis.
     """)
 
     with gr.Row():
 
-        # INPUT
+        # KIRI: INPUT
         with gr.Column(scale=2):
+
             input_text = gr.Textbox(
-                lines=5,
-                placeholder="Contoh: game ini seru banget dan tidak lag...",
-                label="📝 Masukkan Review"
+                lines=4,
+                placeholder="Tulis review...",
+                label="📝 Input"
             )
 
-            btn = gr.Button("🔍 Analisis Sekarang", variant="primary")
+            with gr.Row():
+                btn = gr.Button("⚡ Analyze", variant="primary")
+                clear = gr.Button("Reset")
 
-        # OUTPUT (LEBIH KEREN)
-        with gr.Column(scale=1):
-            output = gr.Label(label="📊 Hasil Sentimen")
+            # contoh kecil (tidak panjang)
+            gr.Examples(
+                examples=[
+                        ["game ini seru banget dan tidak lag"],
+                        ["saya kecewa karena banyak bug"],
+                        ["skin nya keren dan gameplay nya enak"],
+                        ["server sering lag dan tidak stabil"],
+                        ["lumayan bagus tapi matchmaking aneh"]
+                ],
+                inputs=input_text
+            )
 
-    # EXAMPLES
-    gr.Markdown("### ✨ Contoh Review")
-    gr.Examples(
-        examples=examples,
-        inputs=input_text
-    )
+        # KANAN: OUTPUT
+        with gr.Column(scale=3):
 
-    # FOOTER
-    gr.Markdown("""
-    ---
-    👩‍💻 Dibuat untuk Analisis Sentimen Mobile Legends  
-    🚀 Powered by Deep Learning
-    """)
+            output_label = gr.Label(label="📊 Sentiment")
+
+            insight_box = gr.Markdown("💡 Insight")
+
+            cleaned_text_box = gr.Textbox(
+                label="🧹 Clean Text",
+                interactive=False,
+                lines=2
+            )
 
     # ACTION
     btn.click(
         fn=predict_sentiment,
         inputs=input_text,
-        outputs=output
+        outputs=[output_label, insight_box, cleaned_text_box],
+        show_progress=True
     )
+
+    clear.click(
+        fn=lambda: ("", {}, "💡 Insight", ""),
+        inputs=[],
+        outputs=[input_text, output_label, insight_box, cleaned_text_box]
+    )
+
 
 # =========================================================
 # RUN
