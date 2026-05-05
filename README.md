@@ -73,7 +73,7 @@ Dua demo interaktif akan dideploy ke Hugging Face Spaces menggunakan Gradio atau
 
 ## Scientific Paper
 Laporan akhir proyek disusun menggunakan template LaTeX berformat ArXiv. Paper ini akan mencakup deskripsi dataset, metodologi, setup eksperimen, dan analisis komparatif antara ML dan DL.
-*   *ArXiv Link:* [Link akan ditambahkan di Checkpoint 4]
+*   *ArXiv Link:* [https://arxiv.org/abs/2605.01317]
 
 ## Course Information
 *   *Course:* Pemrosesan Bahasa Alami (SD25-32202)
